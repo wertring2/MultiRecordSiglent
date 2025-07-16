@@ -20,6 +20,7 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panelChassis = new System.Windows.Forms.Panel();
             this.panelParameters = new System.Windows.Forms.Panel();
             this.buttonSetRelative = new System.Windows.Forms.Button();
@@ -142,7 +143,7 @@
             this.labelSpeed.ForeColor = System.Drawing.Color.White;
             this.labelSpeed.Location = new System.Drawing.Point(265, 15);
             this.labelSpeed.Name = "labelSpeed";
-            this.labelSpeed.Size = new System.Drawing.Size(48, 17);
+            this.labelSpeed.Size = new System.Drawing.Size(61, 23);
             this.labelSpeed.TabIndex = 2;
             this.labelSpeed.Text = "Speed:";
             // 
@@ -166,7 +167,7 @@
             this.labelRange.ForeColor = System.Drawing.Color.White;
             this.labelRange.Location = new System.Drawing.Point(15, 15);
             this.labelRange.Name = "labelRange";
-            this.labelRange.Size = new System.Drawing.Size(48, 17);
+            this.labelRange.Size = new System.Drawing.Size(62, 23);
             this.labelRange.TabIndex = 0;
             this.labelRange.Text = "Range:";
             // 
@@ -283,10 +284,10 @@
             this.dataGridViewRecords.Name = "dataGridViewRecords";
             this.dataGridViewRecords.ReadOnly = true;
             this.dataGridViewRecords.RowHeadersVisible = false;
+            this.dataGridViewRecords.RowHeadersWidth = 51;
             this.dataGridViewRecords.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewRecords.Size = new System.Drawing.Size(745, 520);
             this.dataGridViewRecords.TabIndex = 0;
-            
             // 
             // groupBoxSystem
             // 
@@ -312,7 +313,7 @@
             this.textBoxSystemInfo.Location = new System.Drawing.Point(9, 61);
             this.textBoxSystemInfo.Name = "textBoxSystemInfo";
             this.textBoxSystemInfo.ReadOnly = true;
-            this.textBoxSystemInfo.Size = new System.Drawing.Size(445, 22);
+            this.textBoxSystemInfo.Size = new System.Drawing.Size(445, 25);
             this.textBoxSystemInfo.TabIndex = 3;
             // 
             // buttonGetError
@@ -525,7 +526,7 @@
             this.lblMeasurementType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(214)))), ((int)(((byte)(233)))));
             this.lblMeasurementType.Location = new System.Drawing.Point(10, 10);
             this.lblMeasurementType.Name = "lblMeasurementType";
-            this.lblMeasurementType.Size = new System.Drawing.Size(111, 20);
+            this.lblMeasurementType.Size = new System.Drawing.Size(141, 25);
             this.lblMeasurementType.TabIndex = 2;
             this.lblMeasurementType.Text = "NO FUNCTION";
             // 
@@ -619,7 +620,7 @@
             this.textBoxPort.ForeColor = System.Drawing.Color.White;
             this.textBoxPort.Location = new System.Drawing.Point(234, 22);
             this.textBoxPort.Name = "textBoxPort";
-            this.textBoxPort.Size = new System.Drawing.Size(100, 25);
+            this.textBoxPort.Size = new System.Drawing.Size(100, 29);
             this.textBoxPort.TabIndex = 3;
             this.textBoxPort.Text = "5025";
             this.textBoxPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -629,7 +630,7 @@
             this.labelPort.AutoSize = true;
             this.labelPort.Location = new System.Drawing.Point(197, 27);
             this.labelPort.Name = "labelPort";
-            this.labelPort.Size = new System.Drawing.Size(32, 15);
+            this.labelPort.Size = new System.Drawing.Size(38, 20);
             this.labelPort.TabIndex = 2;
             this.labelPort.Text = "Port:";
             // 
@@ -641,7 +642,7 @@
             this.textBoxIP.ForeColor = System.Drawing.Color.White;
             this.textBoxIP.Location = new System.Drawing.Point(79, 22);
             this.textBoxIP.Name = "textBoxIP";
-            this.textBoxIP.Size = new System.Drawing.Size(112, 25);
+            this.textBoxIP.Size = new System.Drawing.Size(112, 29);
             this.textBoxIP.TabIndex = 1;
             this.textBoxIP.Text = "10.11.13.220";
             this.textBoxIP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -651,7 +652,7 @@
             this.labelIP.AutoSize = true;
             this.labelIP.Location = new System.Drawing.Point(6, 27);
             this.labelIP.Name = "labelIP";
-            this.labelIP.Size = new System.Drawing.Size(65, 15);
+            this.labelIP.Size = new System.Drawing.Size(81, 20);
             this.labelIP.TabIndex = 0;
             this.labelIP.Text = "IP Address:";
             // 
@@ -701,10 +702,11 @@
             this.ClientSize = new System.Drawing.Size(1528, 624);
             this.Controls.Add(this.panelChassis);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SIGLENT SDM3055 Remote Control";
+            this.Text = "RIGOL DM858 Remote Control";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);

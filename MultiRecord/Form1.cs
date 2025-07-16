@@ -161,8 +161,8 @@ namespace MultiRecord
                 SetFunctionButtonsEnabled(false);
                 LogActivity($"กำลังเปลี่ยนฟังก์ชันเป็น: {function}");
 
-                await _dmm.StopContinuousReadingAsync();
-                await Task.Delay(100);
+                // await _dmm.StopContinuousReadingAsync();
+                // await Task.Delay(100);
 
                 _currentFunction = function;
                 _activeButton = clickedButton;
@@ -317,26 +317,31 @@ namespace MultiRecord
             switch (func)
             {
                 case MeasurementFunction.VoltageDC:
+                    return new Dictionary<string, string>
+                    {
+                        { ":AUTO 1", "Auto" }, { " 100E-3", "100 mV" }, { " 1", "1 V" },
+                        { " 10", "10 V" }, { " 100", "100 V" }, { " 1000", "1000 V" }
+                    };
                 case MeasurementFunction.VoltageAC:
                     return new Dictionary<string, string>
                     {
-                        { "AUTO", "Auto" }, { "0.2", "200 mV" }, { "2", "2 V" },
-                        { "20", "20 V" }, { "200", "200 V" }, { "1000", "1000 V" }
+                        { ":AUTO 1", "Auto" }, { " 100E-3", "100 mV" }, { " 1", "1 V" },
+                        { " 10", "10 V" }, { " 100", "100 V" }, { " 750", "750 V" }
                     };
                 case MeasurementFunction.Resistance2W:
                 case MeasurementFunction.Resistance4W:
                     return new Dictionary<string, string>
                     {
-                        { "AUTO", "Auto" }, { "200", "200 Ω" }, { "2E3", "2 kΩ" },
-                        { "20E3", "20 kΩ" }, { "200E3", "200 kΩ" }, { "2E6", "2 MΩ" },
-                        { "10E6", "10 MΩ" }, { "100E6", "100 MΩ" }
+                        { ":AUTO 1", "Auto" }, { " 100", "100 Ω" }, { " 1000", "1 kΩ" },
+                        { " 10000", "10 kΩ" }, { " 100000", "100 kΩ" }, { " 1000000", "1 MΩ" },
+                        { " 10000000", "10 MΩ" }, { " 50000000", "50 MΩ" }
                     };
                 case MeasurementFunction.CurrentDC:
                 case MeasurementFunction.CurrentAC:
                     return new Dictionary<string, string>
                      {
-                        { "AUTO", "Auto" }, { "200E-6", "200 µA" }, { "2E-3", "2 mA" },
-                        { "20E-3", "20 mA" }, { "200E-3", "200 mA" }, { "2", "2 A" }, { "10", "10 A" }
+                        { ":AUTO 1", "Auto" }, { " 100E-6", "100 µA" }, { " 1E-3", "1 mA" },
+                        { " 10E-3", "10 mA" }, { " 100E-3", "100 mA" }, { " 1", "1 A" }, { " 10", "10 A" }
                      };
                 default:
                     return new Dictionary<string, string>();
@@ -371,8 +376,7 @@ namespace MultiRecord
                 case MeasurementFunction.Resistance4W:
                     return new Dictionary<string, string>
                     {
-                        { "0.02", "Fast" }, { "0.2", "Medium" }, { "1", "Slow (1 PLC)" },
-                        { "10", "Very Slow (10 PLC)" }
+                        { "0.4", "Fast" }, { "5", "Medium" }, { "20", "Slow (1 PLC)" },
                     };
                 default:
                     return new Dictionary<string, string>();

@@ -216,7 +216,7 @@ namespace SIGLENT
         // --- ฟีเจอร์ใหม่: เมธอดสำหรับตั้งค่าพารามิเตอร์ ---
         public Task SetMeasurementRangeAsync(MeasurementFunction func, string range)
         {
-            string cmd = GetCommandPrefix(func) + $":RANGE {range}";
+            string cmd = GetCommandPrefix(func) + $":RANGE{range}";
             return SendCommandAsync(cmd);
         }
 
@@ -249,16 +249,26 @@ namespace SIGLENT
         {
             switch (func)
             {
-                case MeasurementFunction.VoltageDC: return "SENS:VOLT:DC";
-                case MeasurementFunction.VoltageAC: return "SENS:VOLT:AC";
-                case MeasurementFunction.CurrentDC: return "SENS:CURR:DC";
-                case MeasurementFunction.CurrentAC: return "SENS:CURR:AC";
-                case MeasurementFunction.Resistance2W: return "SENS:RES";
-                case MeasurementFunction.Resistance4W: return "SENS:FRES";
-                case MeasurementFunction.Capacitance: return "SENS:CAP";
-                case MeasurementFunction.Frequency: return "SENS:FREQ";
-                case MeasurementFunction.Diode: return "SENS:DIOD"; // Diode might not have all these settings
-                case MeasurementFunction.Temperature: return "SENS:TEMP";
+                //case MeasurementFunction.VoltageDC: return "SENS:VOLT:DC";
+                case MeasurementFunction.VoltageDC: return "SENSe:VOLTage:DC";
+                //case MeasurementFunction.VoltageAC: return "SENS:VOLT:AC";
+                case MeasurementFunction.VoltageAC: return "SENSe:VOLTage:AC";
+                //case MeasurementFunction.CurrentDC: return "SENS:CURR:DC";
+                case MeasurementFunction.CurrentDC: return "SENSe:CURRent:DC";
+                //case MeasurementFunction.CurrentAC: return "SENS:CURR:AC";
+                case MeasurementFunction.CurrentAC: return "SENSe:CURRent:AC";
+                //case MeasurementFunction.Resistance2W: return "SENS:RES";
+                case MeasurementFunction.Resistance2W: return "SENSe:RESistance";
+                //case MeasurementFunction.Resistance4W: return "SENS:FRES";
+                case MeasurementFunction.Resistance4W: return "SENSe:FRESistance";
+                //case MeasurementFunction.Capacitance: return "SENS:CAP";
+                case MeasurementFunction.Capacitance: return "SENSe:CAPacitance";
+                //case MeasurementFunction.Frequency: return "SENS:FREQ";
+                case MeasurementFunction.Frequency: return "SENSe:FREQuency";
+                //case MeasurementFunction.Diode: return "SENS:DIOD"; // Diode might not have all these settings
+                case MeasurementFunction.Diode: return "SENSe:DIOD";
+                //case MeasurementFunction.Temperature: return "SENS:TEMP";
+                case MeasurementFunction.Temperature: return "SENSe:TEMP";
                 default: throw new ArgumentException("Unsupported function for parameter setting");
             }
         }
@@ -266,7 +276,7 @@ namespace SIGLENT
 
         public async Task StartContinuousReadingAsync(MeasurementFunction function)
         {
-            await StopContinuousReadingAsync();
+            // await StopContinuousReadingAsync();
             if (!IsConnected) throw new InvalidOperationException("Not connected to device");
 
             _isReading = true;
@@ -281,7 +291,20 @@ namespace SIGLENT
                 Debug.WriteLine($"Starting continuous reading for {function}");
                 await SendCommandAsync(configCommand);
                 await Task.Delay(200);
-
+                
+                //ถ้า Task เดิมยังทำงานอยู่ ไม่ต้องสร้าง Task ใหม่ แค่ QueryCommandAsync แล้ว Set Unit
+                if (_continuousReadTask != null && !_continuousReadTask.IsCompleted)
+                {
+                    string response = await QueryCommandAsync("READ?");
+                    if (!string.IsNullOrEmpty(response))
+                    {
+                        Debug.WriteLine($"READ? response: {response}");
+                        if (double.TryParse(response, NumberStyles.Any, CultureInfo.InvariantCulture, out double value))
+                        {
+                            ReadingReceived?.Invoke(this, new MeasurementResult(value, unit, function));
+                        }
+                    }
+                }
                 _continuousReadTask = Task.Run(async () =>
                 {
                     while (!token.IsCancellationRequested && _isReading && IsConnected)
